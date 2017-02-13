@@ -35,3 +35,6 @@ node_modules
 # Not necessary to execute
 LICENSE
 README.md
+
+# Local ENV
+.env

@@ -1,0 +1,15 @@
+---
+declared-services:
+  parse-mongo:
+    label: compose-for-mongo
+    plan: Standard
+applications:
+- name: parse-on-bluemix
+  path: .
+  instances: 1
+  disk_quota: 512M
+  memory: 256M
+  host: parse-${random-word}
+  random-route: true
+  services:
+  - parse-mongo

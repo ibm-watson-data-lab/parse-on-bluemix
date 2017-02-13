@@ -12,10 +12,19 @@
 
 'use strict';
 
+// Local env
+require('dotenv').load({ silent: true });
+
 // Required Libs
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var http = require('http');
+var cfenv = require('cfenv');
+
+// Credentials
+var appEnv = cfenv.getAppEnv();
+
+var databaseUri = process.env.DATABASE_URI || appEnv.getServiceCreds('parse-mongo').uri;
 
 // Start Express
 var app = express();
@@ -29,29 +38,13 @@ if (!process.env.MASTER_KEY) {
   throw 'Please apply the Master Key from Parse.com';
 }
 
-if (process.env.DATABASE_URI) {
-  var databaseUri = process.env.DATABASE_URI;
-} else if (process.env.VCAP_SERVICES) {
-  var vcapServices = JSON.parse(process.env.VCAP_SERVICES);
-  const pattern = /mongo/i;
-  for (var i = 0; i < vcapServices['user-provided'].length; i++) {
-    if (vcapServices['user-provided'][i].name.search(pattern) >= 0 ||
-      vcapServices['user-provided'][i].credentials.uri.search(pattern) >= 0) {
-      var databaseUri = 'mongodb://' +
-        vcapServices['user-provided'][i].credentials.user +
-        ':' + vcapServices['user-provided'][i].credentials.password +
-        '@' + vcapServices['user-provided'][i].credentials.uri;
-      break;
-    }
-  }
-
-} else {
+if (!databaseUri) {
   throw 'Please provide DATABASE_URI to an instance of MongoDB or deploy to Bluemix with a Compose MongoDB service';
 }
 
 // Server Location
-var port      = process.env.VCAP_APP_PORT || process.env.PORT || 1337;
-var host      = process.env.VCAP_APP_HOST || 'localhost';
+var port      = appEnv.port;
+var host      = appEnv.bind;
 var mountPath = process.env.PARSE_MOUNT || '/';
 
 // Specify the connection string for your mongodb database
