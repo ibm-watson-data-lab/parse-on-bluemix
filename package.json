@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ibm-cds-labs/parse-on-bluemix.git"
+    "url": "https://github.com/ibm-watson-data-lab/parse-on-bluemix.git"
   },
   "keywords": [
     "parse",
@@ -20,11 +20,11 @@
   "author": "Mike Elsmore <mike.elsmore@uk.ibm.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/ibm-cds-labs/parse-on-bluemix/issues"
+    "url": "https://github.com/ibm-watson-data-lab/parse-on-bluemix/issues"
   },
-  "homepage": "https://github.com/ibm-cds-labs/parse-on-bluemix#readme",
+  "homepage": "https://github.com/ibm-watson-data-lab/parse-on-bluemix#readme",
   "dependencies": {
-    "cf-deployment-tracker-client": "^0.x",
+    "metrics-tracker-client": "*",
     "cfenv": "^1.0.4",
     "dotenv": "^4.0.0",
     "express": "^4.13.4",
