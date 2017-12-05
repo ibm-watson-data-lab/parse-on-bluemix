@@ -114,4 +114,4 @@ app.listen(port, host, function() {
   console.log('parse-server running on port ' + port + '.');
 });
 
-require("cf-deployment-tracker-client").track();
+require("metrics-tracker-client").track();
